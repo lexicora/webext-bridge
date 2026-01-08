@@ -1,65 +1,66 @@
-import type { JsonValue, Jsonify } from 'type-fest'
+import type { JsonValue, Jsonify } from "type-fest";
 
 export type RuntimeContext =
-  | 'devtools'
-  | 'background'
-  | 'popup'
-  | 'options'
-  | 'content-script'
-  | 'window'
+  | "devtools"
+  | "background"
+  | "popup"
+  | "options"
+  | "content-script"
+  | "window"
+  | "side-panel";
 
 export interface Endpoint {
-  context: RuntimeContext
-  tabId: number
-  frameId?: number
+  context: RuntimeContext;
+  tabId: number;
+  frameId?: number;
 }
 
 export interface BridgeMessage<T extends JsonValue> {
-  sender: Endpoint
-  id: string
-  data: T
-  timestamp: number
+  sender: Endpoint;
+  id: string;
+  data: T;
+  timestamp: number;
 }
 
 export type OnMessageCallback<T extends JsonValue, R = void | JsonValue> = (
-  message: BridgeMessage<T>
-) => R | Promise<R>
+  message: BridgeMessage<T>,
+) => R | Promise<R>;
 
 export interface InternalMessage {
-  origin: Endpoint
-  destination: Endpoint
-  transactionId: string
-  hops: string[]
-  messageID: string
-  messageType: 'message' | 'reply'
-  err?: JsonValue
-  data?: JsonValue | void
-  timestamp: number
+  origin: Endpoint;
+  destination: Endpoint;
+  transactionId: string;
+  hops: string[];
+  messageID: string;
+  messageType: "message" | "reply";
+  err?: JsonValue;
+  data?: JsonValue | void;
+  timestamp: number;
 }
 
 export interface StreamInfo {
-  streamId: string
-  channel: string
-  endpoint: Endpoint
+  streamId: string;
+  channel: string;
+  endpoint: Endpoint;
 }
 
 export interface HybridUnsubscriber {
-  (): void
-  dispose: () => void
-  close: () => void
+  (): void;
+  dispose: () => void;
+  close: () => void;
 }
 
-export type Destination = Endpoint | RuntimeContext | string
+export type Destination = Endpoint | RuntimeContext | string;
 
-declare const ProtocolWithReturnSymbol: unique symbol
+declare const ProtocolWithReturnSymbol: unique symbol;
 
 export interface ProtocolWithReturn<Data, Return> {
-  data: Jsonify<Data>
-  return: Jsonify<Return>
+  data: Jsonify<Data>;
+  return: Jsonify<Return>;
   /**
    * Type differentiator only.
    */
-  [ProtocolWithReturnSymbol]: true
+  [ProtocolWithReturnSymbol]: true;
 }
 
 /**
@@ -72,14 +73,14 @@ export interface ProtocolMap {
 
 export type DataTypeKey = keyof ProtocolMap extends never
   ? string
-  : keyof ProtocolMap
+  : keyof ProtocolMap;
 
 export type GetDataType<
   K extends DataTypeKey,
   Fallback extends JsonValue = undefined,
 > = K extends keyof ProtocolMap
   ? ProtocolMap[K] extends (...args: infer Args) => any
-    ? Args['length'] extends 0
+    ? Args["length"] extends 0
       ? undefined
       : Args[0]
     : ProtocolMap[K] extends ProtocolWithReturn<infer Data, any>
@@ -87,10 +88,9 @@ export type GetDataType<
       : ProtocolMap[K]
   : Fallback;
 
-
 export type GetReturnType<
   K extends DataTypeKey,
-  Fallback extends JsonValue = undefined
+  Fallback extends JsonValue = undefined,
 > = K extends keyof ProtocolMap
   ? ProtocolMap[K] extends (...args: any[]) => infer R
     ? R
