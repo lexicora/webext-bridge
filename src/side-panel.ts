@@ -21,7 +21,7 @@ export function getSidePanel(tabId) {
   };
 }
 
-// Credit to code in this file: https://github.com/serversideup/webext-bridge/discussions/91 -> https://github.com/adao [Author]
+//* INFO: Credit to code in this file: https://github.com/serversideup/webext-bridge/discussions/91 -> https://github.com/adao [Author]
 
 // Second approach:
 // import browser from 'webextension-polyfill'
