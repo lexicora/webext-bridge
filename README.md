@@ -21,8 +21,8 @@ In addition to the standard features, this fork includes:
 ## Installation
 Since this is a custom fork, you should install it directly from this repository using `pnpm`:
 
-```bash
-pnpm add github:your-username/webext-bridge#your-branch-name
+``` console
+pnpm add https://github.com/lexicora/webext-bridge/releases/download/[TAG OF A RELEASE]/webext-bridge-6.0.1.tgz
 ```
 
 # Usage (Original Features)
