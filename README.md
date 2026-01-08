@@ -6,7 +6,7 @@
 > **THIS IS A FORK**
 > This repository is a custom fork of the original [webext-bridge](https://github.com/serversideup/webext-bridge) by Server Side Up. 
 > **Purpose:** Added side panel support.
-> **Status:** This version is maintained specifically for [GitHub - lexicora/lexicora-extension](https://github.com/lexicora/lexicora-extension).
+> **Status:** This version is maintained specifically for [lexicora/lexicora-extension](https://github.com/lexicora/lexicora-extension).
 
 ---
 
