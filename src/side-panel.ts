@@ -2,7 +2,7 @@ import { createEndpointRuntime } from "./internal/endpoint-runtime";
 import { createStreamWirings } from "./internal/stream";
 import { createPersistentPort } from "./internal/persistent-port";
 
-export function getSidePanel(tabId) {
+export function getSidePanel(tabId: string | number | undefined) {
   const port = createPersistentPort(`side-panel@${tabId}`);
   const endpointRuntime = createEndpointRuntime("side-panel", (message) =>
     port.postMessage(message),
