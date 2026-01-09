@@ -2,8 +2,17 @@ import { createEndpointRuntime } from "./internal/endpoint-runtime";
 import { createStreamWirings } from "./internal/stream";
 import { createPersistentPort } from "./internal/persistent-port";
 
-export function getSidePanel(tabId: string | number | undefined) {
-  const port = createPersistentPort(`side-panel@${tabId}`);
+/**
+ * Creates a Side Panel messaging endpoint.
+ * @param scopeId - The unique identifier for the side panel scope (e.g., tab ID, window ID).
+ *
+ * If you wish to pass nothing to scopeId, you can just pass a 0 or an empty string.
+ *
+ * @returns An object containing methods to send messages, listen for messages,
+ *          open streams, and handle stream channels.
+ */
+export function getSidePanel(scopeId: string | number) {
+  const port = createPersistentPort(`side-panel@${scopeId}`);
   const endpointRuntime = createEndpointRuntime("side-panel", (message) =>
     port.postMessage(message),
   );
@@ -21,22 +30,4 @@ export function getSidePanel(tabId: string | number | undefined) {
   };
 }
 
-//* INFO: Credit to code in this file: https://github.com/serversideup/webext-bridge/discussions/91 -> https://github.com/adao [Author]
-
-// Second approach:
-// import browser from 'webextension-polyfill'
-// import { createEndpointRuntime } from './internal/endpoint-runtime'
-// import { createStreamWirings } from './internal/stream'
-// import { createPersistentPort } from './internal/persistent-port'
-
-// const [tab] = await browser.tabs.query({active: true, currentWindow: true})
-// const port = createPersistentPort(`side-panel@${tab.id}`)
-// const endpointRuntime = createEndpointRuntime(
-//   'side-panel',
-//   message => port.postMessage(message),
-// )
-
-// port.onMessage(endpointRuntime.handleMessage)
-
-// export const { sendMessage, onMessage } = endpointRuntime
-// export const { openStream, onOpenStreamChannel } = createStreamWirings(endpointRuntime)
+//* INFO: Code in this file inspired by: https://github.com/serversideup/webext-bridge/discussions/91 -> https://github.com/adao [Author]
