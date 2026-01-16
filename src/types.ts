@@ -1,13 +1,13 @@
-import type { JsonValue, Jsonify } from "type-fest";
+import type { JsonValue, Jsonify } from 'type-fest';
 
 export type RuntimeContext =
-  | "devtools"
-  | "background"
-  | "popup"
-  | "options"
-  | "content-script"
-  | "window"
-  | "side-panel";
+  | 'devtools'
+  | 'background'
+  | 'popup'
+  | 'options'
+  | 'content-script'
+  | 'window'
+  | 'side-panel';
 
 export interface Endpoint {
   context: RuntimeContext;
@@ -32,7 +32,7 @@ export interface InternalMessage {
   transactionId: string;
   hops: string[];
   messageID: string;
-  messageType: "message" | "reply";
+  messageType: 'message' | 'reply';
   err?: JsonValue;
   data?: JsonValue | void;
   timestamp: number;
@@ -80,7 +80,7 @@ export type GetDataType<
   Fallback extends JsonValue = undefined,
 > = K extends keyof ProtocolMap
   ? ProtocolMap[K] extends (...args: infer Args) => any
-    ? Args["length"] extends 0
+    ? Args['length'] extends 0
       ? undefined
       : Args[0]
     : ProtocolMap[K] extends ProtocolWithReturn<infer Data, any>

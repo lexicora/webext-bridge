@@ -1,4 +1,4 @@
-import type { Endpoint, RuntimeContext } from "../types";
+import type { Endpoint, RuntimeContext } from '../types';
 
 const ENDPOINT_RE =
   /^((?:background$)|devtools|popup|side-panel|options|content-script|window)(?:@(\d+)(?:\.(\d+))?)?$/;
@@ -18,7 +18,7 @@ export const formatEndpoint = ({
   tabId,
   frameId,
 }: Endpoint): string => {
-  if (["background", "popup", "options"].includes(context)) return context;
+  if (['background', 'popup', 'options'].includes(context)) return context;
 
-  return `${context}@${tabId}${frameId ? `.${frameId}` : ""}`;
+  return `${context}@${tabId}${frameId ? `.${frameId}` : ''}`;
 };

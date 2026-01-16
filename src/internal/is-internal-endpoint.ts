@@ -1,12 +1,12 @@
-import type { Endpoint, RuntimeContext } from "../types";
+import type { Endpoint, RuntimeContext } from '../types';
 
 const internalEndpoints: RuntimeContext[] = [
-  "background",
-  "devtools",
-  "content-script",
-  "options",
-  "popup",
-  "side-panel",
+  'background',
+  'devtools',
+  'content-script',
+  'options',
+  'popup',
+  'side-panel',
 ];
 
 export const isInternalEndpoint = ({ context: ctx }: Endpoint): boolean =>

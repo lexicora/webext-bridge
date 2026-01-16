@@ -1,6 +1,6 @@
-import { createEndpointRuntime } from "./internal/endpoint-runtime";
-import { createStreamWirings } from "./internal/stream";
-import { createPersistentPort } from "./internal/persistent-port";
+import { createEndpointRuntime } from './internal/endpoint-runtime';
+import { createStreamWirings } from './internal/stream';
+import { createPersistentPort } from './internal/persistent-port';
 
 /**
  * Creates a Side Panel messaging endpoint.
@@ -13,7 +13,7 @@ import { createPersistentPort } from "./internal/persistent-port";
  */
 export function getSidePanel(scopeId: string | number) {
   const port = createPersistentPort(`side-panel@${scopeId}`);
-  const endpointRuntime = createEndpointRuntime("side-panel", (message) =>
+  const endpointRuntime = createEndpointRuntime('side-panel', (message) =>
     port.postMessage(message),
   );
 
