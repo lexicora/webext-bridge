@@ -20,7 +20,8 @@ export interface EndpointRuntime {
   >(
     messageID: K,
     data: GetDataType<K, JsonValue>,
-    destination?: Destination
+    destination?: Destination,
+    options?: { timeout?: number }
   ) => Promise<GetReturnType<K, ReturnType>>
   onMessage: <Data extends JsonValue, K extends DataTypeKey = DataTypeKey>(
     messageID: K,
@@ -143,7 +144,7 @@ export const createEndpointRuntime = (
       transactionP?.reject('Transaction was ended before it could complete')
       openTransactions.delete(transactionID)
     },
-    sendMessage: (messageID, data, destination = 'background') => {
+    sendMessage: (messageID, data, destination = 'background', options) => {
       const endpoint
         = typeof destination === 'string'
           ? parseEndpoint(destination)
@@ -169,6 +170,15 @@ export const createEndpointRuntime = (
         }
 
         openTransactions.set(payload.transactionId, { resolve, reject })
+
+        if (options?.timeout) {
+          setTimeout(() => {
+            if (openTransactions.has(payload.transactionId)) {
+              openTransactions.delete(payload.transactionId)
+              reject(new Error(`[webext-bridge] Timed out waiting for response to "${messageID}"`))
+            }
+          }, options.timeout)
+        }
 
         try {
           handleMessage(payload)
